@@ -1,29 +1,31 @@
 $(document).ready(onReady);
 
+let lastOperator = $('.operator').attr("value");
+
 function onReady() {
     console.log('jquery is loaded!');
 
-    $('.operator').on('click', lastOperator);
+    $('.operator').on('click', onOperator);
     $('.equal').on('click', onSubmit);
 }
-function lastOperator(evt){
-    evt.preventDefault();
-    lastOperator = $('.operator').val();
+
+function onOperator(){
+    lastOperator = $(this).attr("value");
     console.log('this is the last operator clicked', lastOperator)
 } 
 
 function onSubmit(evt) {
-    console.log('We are in onSubmit');
     evt.preventDefault();
-
+    console.log('We are in onSubmit');
+    
     let input1 = $('#number1').val();
     let input2 = $('#number2').val();
-
-
+    
     let inputValues = {
         input1: input1,
         input2: input2,
-        operator: lastOperator
+        operator: lastOperator,
+        answer: '',
     };
     console.log('new input values in client.js', inputValues);
 
@@ -41,8 +43,6 @@ function onSubmit(evt) {
     })
 }
 
-
-
 function fetchCalculations() {
     $.ajax({
         method:'GET',
@@ -53,6 +53,7 @@ function fetchCalculations() {
         for (let calculations of response) {
             $('#returnedAnswer').text(response.answer),
             $('#history').append (`
+    
             `)
             
         }

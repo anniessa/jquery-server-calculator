@@ -11,16 +11,23 @@ let calculations = [];
 
 app.post('/calculator' , (req, res)=> {
     console.log('inside of my POST request', req.body);
-
-    // calculations are going to go here ⬇️
+    // posting the object package from client side
+    let objectSS = req.body;
     
-    
-
+    calculations.push(objectSS);
     res.sendStatus(201);
 });  
 
 app.get('/calculator', (req, res) => {
     console.log('getting the input data from client js', calculations);
+     // calculations are going to go here ⬇️
+
+     for (let object of array) {
+        if (object.operator === "+") {
+            object.input1 + object.input2;
+        } 
+     }
+
 
     res.send(calculations);
   });
