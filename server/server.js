@@ -23,13 +23,16 @@ app.get('/calculator', (req, res) => {
      // calculations are going to go here ⬇️
 
      for (let object of calculations) {
-        if (object.operator == "+") {
-        object.answer = Number(object.input1) + Number(object.input2); 
-        } 
-        
-    }
-
-    
+        if (object.operator === "+") {
+        object.result = Number(object.input1) + Number(object.input2); 
+        } else if (object.operator === "-") {
+            object.result = Number(object.input1) - Number(object.input2);
+        } else if (object.operator === "*") {
+            object.result = Number(object.input1) * Number(object.input2); 
+        } else if (object.operator === "/") {
+            object.result = Number(object.input1) / Number(object.input2);
+        };
+    };
     res.send(calculations);
     console.log('this is a calculation', calculations)
   });
