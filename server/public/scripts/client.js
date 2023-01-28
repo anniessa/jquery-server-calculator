@@ -8,12 +8,18 @@ function onReady() {
     
     $('.operator').on('click', onOperator);
     $('.equal').on('click', onSubmit);
+    $('.clearBtn').on('click', onClear);
 }
 
 function onOperator(){
     lastOperator = $(this).attr("value");
-    console.log('this is the last operator clicked', lastOperator)
+    console.log('this is the last operator clicked', lastOperator);
 } 
+
+function onClear() {
+    $('#number1').val('');
+    $('#number2').val('');
+}
 
 function onSubmit(evt) {
     evt.preventDefault();
@@ -22,7 +28,7 @@ function onSubmit(evt) {
     let input1 = $('#number1').val();
     let input2 = $('#number2').val();
     
-    let inputValues = {
+    let inputValues = { //let's store these values in an object to get ready to send as data!
         input1: input1,
         operator: lastOperator,
         input2: input2,
@@ -33,14 +39,12 @@ function onSubmit(evt) {
     $.ajax({
         method: 'POST',
         url:'/calculator',
-        data: inputValues
+        data: inputValues //sending that object data riiiiight over to server 😃
     }).then(function(response){
         calculations = response;
-        $('#number1').val('');
-        $('#number2').val('');
         fetchCalculations();
     }).catch(function(err){
-        alert('Error! Try again later.')
+        alert('Unable to send the data! Try again later.')
         console.log(err);
     })
 }
@@ -52,12 +56,15 @@ function fetchCalculations() {
     }).then(function(response) {
         calculationsArray = response;
         onRender();
-    });
+    }).catch(function(err) {
+        alert('Unable to get the data! Try again later.')
+        console.log(err);
+    })
 }
 
 function onRender() {
-    let answer = $('#returnedAnswer');
-    answer.empty();
+
+    $('#returnedAnswer').empty();
     $('#history').empty();
     
     for (let values of calculationsArray) {
