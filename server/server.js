@@ -22,14 +22,16 @@ app.get('/calculator', (req, res) => {
     console.log('getting the input data from client js', calculations);
      // calculations are going to go here ⬇️
 
-     for (let object of array) {
-        if (object.operator === "+") {
-            object.input1 + object.input2;
+     for (let object of calculations) {
+        if (object.operator == "+") {
+        object.answer = Number(object.input1) + Number(object.input2); 
         } 
-     }
+        
+    }
 
-
+    
     res.send(calculations);
+    console.log('this is a calculation', calculations)
   });
 
 app.listen(PORT, () => {
