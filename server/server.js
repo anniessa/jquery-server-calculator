@@ -37,6 +37,11 @@ app.get('/calculator', (req, res) => { // hey server is gonna use that data you 
     console.log('this is a calculation', calculationsSS)
 });
 
+app.delete('/calculator/:index', (req,res) => {
+    console.log('in /calculator delete:', req.params.index);
+    res.sendStatus(201);
+})
+
 app.listen(PORT, () => {
     console.log ('Server is running on port', PORT)
 })
