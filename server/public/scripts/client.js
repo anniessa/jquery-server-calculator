@@ -62,6 +62,19 @@ function fetchCalculations() {
     })
 }
 
+function deleteMessage() {
+    let index = $(this).data('index');
+    $.ajax({
+        method: 'DELETE',
+        url: '/calculator/' + index
+    }).then(function (response) {
+        fetchCalculations();
+    }).catch(function (err) {
+        alert('Unable to delete message! Try again.');
+        console.log(err);
+    })
+}
+
 function onRender() {
 
     $('#returnedAnswer').empty();
