@@ -33,9 +33,8 @@ app.get('/calculator', (req, res) => { // hey server is gonna use that data you 
         } else if (object.operator === "/") {
             object.answer = Number(object.firstNumber) / Number(object.secondNumber);
         };
-        answer = object.answer;
+        object.answer
     };
-
 
     res.send(calculationsSS); // sending the calculations array with allll the calculations back to client-side
     console.log('this is a calculation', calculationsSS)
