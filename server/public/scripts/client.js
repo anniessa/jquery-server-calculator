@@ -1,19 +1,17 @@
 $(document).ready(onReady);
 
-let lastOperator = $('.operator').attr("value");4
-// let number = $('.number').attr("value");
+let operatorClick = $('.operator').attr("value");
 // let decimal =$('.decimal').attr("value");
 let calculationsArray = [];
-// let generateValue = '';
-let totalInput = '';
+// let totalInput = '';
 
 
 
 function onReady() {
     console.log('jquery is loaded!');
     
-    $('.number').on('click', addInputField);
-    $('.operator').on('click', onOperator);
+    $('.row button').on('click', addInputField);
+    $('.operator').on('click', addOperator);
     $('.decimal').on('click', addInputField);
     $('.equal').on('click', onSubmit);
     $('.clearBtn').on('click', onClear);
@@ -23,51 +21,54 @@ function onReady() {
 function addInputField(){
     let buttonNumber = $(this).val();
     let currentInput = $('#fullEquation').val();
-    let totalInput = currentInput + buttonNumber
+    let totalInput = currentInput + buttonNumber 
     
     $('#fullEquation').val(totalInput);
     console.log('total input', totalInput);
-    calculationsArray.push(totalInput);
-
    }
 
-function onOperator(){
-    lastOperator = $(this).attr("value");
-    console.log('this is the last operator clicked', lastOperator);
-    addInputField();
-} 
+function addOperator(){
+    $('.operator').prop('disabled', true);
+    console.log('this operator was clicked', operatorClick);
+}
 
 function onClear() {
+    $('.operator').prop('disabled', false);
     $('#fullEquation').val('');
 } 
 
 function onSubmit(evt) {
     evt.preventDefault();
     console.log('We are in onSubmit');
-    console.log('I want to see calculations array', calculationsArray);
     
     let equation = $('#fullEquation').val();
-    let firstNumber = 0;
-    let operator;
-    let secondNumber = 0;
+
+    let firstNumber = '';
+    let operator = '';
+    let secondNumber = '';
     let completedFirstNumber = false;
 
     for (i in equation) {
-        if (equation[i] === "+" || "-" || "*" || "/") {
-        operator += equation[i];
+        if (equation[i] === "+" || equation[i] === "-" || equation[i] === "*" || equation[i] === "/") {
+        operator = equation[i];
         completedFirstNumber = true;
         }
-        else if (equation[i]) === 
+        else if (completedFirstNumber === true) {
+            secondNumber += equation[i];
+        } else if (isNaN(equation[i]) === false) {
+            firstNumber += equation[i];
+        }
     }
 
     let inputValues = {
         firstNumber: firstNumber,
-        operator: 
-        secondNumber:
+        operator: operator,
+        secondNumber: secondNumber,
     }
 
     console.log('new input values in client.js', inputValues);
-    
+
+    if (firstNumber !== '' && operator !== '' && secondNumber !== '') {
     $.ajax({
         method: 'POST',
         url:'/calculator',
@@ -78,7 +79,10 @@ function onSubmit(evt) {
     }).catch(function(err){
         alert('Unable to send the data! Try again later.')
         console.log(err);
-    })
+    })} else {
+        $('#history').empty();
+        $('#history').text('Error: Invalid Input');
+    }
 }
 
 function fetchCalculations() {
@@ -112,11 +116,11 @@ function onRender() {
     $('#returnedAnswer').empty();
     $('#history').empty();
     
-    for (let values of calculationsArray) {
-        $('#returnedAnswer').text(`${values.answer}`); 
+    for (let value of calculationsArray) {
+        $('#returnedAnswer').text(`${value.answer}`); 
         $('#history').append (`
         <li>
-        ${values.stringOfButtons} = ${values.answer}
+        ${value.firstNumber} ${value.operator} ${value.secondNumber} = ${value.answer}
         </li> `)}
     };
     
