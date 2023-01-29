@@ -1,53 +1,71 @@
 $(document).ready(onReady);
 
-let lastOperator = $('.operator').attr("value");
-let number = $('.number').attr("value");
-let decimal =$('.decimal').attr("value");
+let lastOperator = $('.operator').attr("value");4
+// let number = $('.number').attr("value");
+// let decimal =$('.decimal').attr("value");
 let calculationsArray = [];
+// let generateValue = '';
+let totalInput = '';
+
 
 
 function onReady() {
     console.log('jquery is loaded!');
     
-    $('.number').on('click', inputRender);
-    $('.operator').on('click', inputRender);
-    $('.decimal').on('click', inputRender);
+    $('.number').on('click', addInputField);
+    $('.operator').on('click', onOperator);
+    $('.decimal').on('click', addInputField);
     $('.equal').on('click', onSubmit);
-    // $('.clearBtn').on('click', onClear);
+    $('.clearBtn').on('click', onClear);
     // $('.clearBtn').on('click', deleteMessage);
 }
 
-// function onOperator(){
-//     lastOperator = $(this).attr("value");
-//     console.log('this is the last operator clicked', lastOperator);
-// } 
+function addInputField(){
+    let buttonNumber = $(this).val();
+    let currentInput = $('#fullEquation').val();
+    let totalInput = currentInput + buttonNumber
+    
+    $('#fullEquation').val(totalInput);
+    console.log('total input', totalInput);
+    calculationsArray.push(totalInput);
 
-// function onClear() {
-//     $('#number1').val('');
-//     $('#number2').val('');
-// }
+   }
 
-function inputRender(){
-    generateValue = $(this).val();
-    console.log('in inputRender', generateValue)
-    calculationsArray.push(generateValue);
-}
+function onOperator(){
+    lastOperator = $(this).attr("value");
+    console.log('this is the last operator clicked', lastOperator);
+    addInputField();
+} 
+
+function onClear() {
+    $('#fullEquation').val('');
+} 
 
 function onSubmit(evt) {
     evt.preventDefault();
     console.log('We are in onSubmit');
     console.log('I want to see calculations array', calculationsArray);
     
-    let oneBigEquation = calculationsArray;
-    let inputValues = {
-        oneBigEquation: oneBigEquation,
-        
-    }
-    
-    // inputValues.assign({}, calculationsArray);
+    let equation = $('#fullEquation').val();
+    let firstNumber = 0;
+    let operator;
+    let secondNumber = 0;
+    let completedFirstNumber = false;
 
-    
-    
+    for (i in equation) {
+        if (equation[i] === "+" || "-" || "*" || "/") {
+        operator += equation[i];
+        completedFirstNumber = true;
+        }
+        else if (equation[i]) === 
+    }
+
+    let inputValues = {
+        firstNumber: firstNumber,
+        operator: 
+        secondNumber:
+    }
+
     console.log('new input values in client.js', inputValues);
     
     $.ajax({
@@ -89,19 +107,16 @@ function fetchCalculations() {
 //     })
 // }
 
-
-
 function onRender() {
 
     $('#returnedAnswer').empty();
     $('#history').empty();
     
     for (let values of calculationsArray) {
-        $('#returnedAnswer').text(`${values.result}`); 
+        $('#returnedAnswer').text(`${values.answer}`); 
         $('#history').append (`
         <li>
-        ${values.input1} ${values.operator} 
-        ${values.input2} = ${values.result}
+        ${values.stringOfButtons} = ${values.answer}
         </li> `)}
     };
     
