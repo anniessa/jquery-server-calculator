@@ -1,39 +1,53 @@
 $(document).ready(onReady);
 
 let lastOperator = $('.operator').attr("value");
+let number = $('.number').attr("value");
+let decimal =$('.decimal').attr("value");
 let calculationsArray = [];
+
 
 function onReady() {
     console.log('jquery is loaded!');
     
-    $('.operator').on('click', onOperator);
+    $('.number').on('click', inputRender);
+    $('.operator').on('click', inputRender);
+    $('.decimal').on('click', inputRender);
     $('.equal').on('click', onSubmit);
-    $('.clearBtn').on('click', onClear);
+    // $('.clearBtn').on('click', onClear);
+    // $('.clearBtn').on('click', deleteMessage);
 }
 
-function onOperator(){
-    lastOperator = $(this).attr("value");
-    console.log('this is the last operator clicked', lastOperator);
-} 
+// function onOperator(){
+//     lastOperator = $(this).attr("value");
+//     console.log('this is the last operator clicked', lastOperator);
+// } 
 
-function onClear() {
-    $('#number1').val('');
-    $('#number2').val('');
+// function onClear() {
+//     $('#number1').val('');
+//     $('#number2').val('');
+// }
+
+function inputRender(){
+    generateValue = $(this).val();
+    console.log('in inputRender', generateValue)
+    calculationsArray.push(generateValue);
 }
 
 function onSubmit(evt) {
     evt.preventDefault();
     console.log('We are in onSubmit');
+    console.log('I want to see calculations array', calculationsArray);
     
-    let input1 = $('#number1').val();
-    let input2 = $('#number2').val();
+    let oneBigEquation = calculationsArray;
+    let inputValues = {
+        oneBigEquation: oneBigEquation,
+        
+    }
     
-    let inputValues = { //let's store these values in an object to get ready to send as data!
-        input1: input1,
-        operator: lastOperator,
-        input2: input2,
-        result: '',
-    };
+    // inputValues.assign({}, calculationsArray);
+
+    
+    
     console.log('new input values in client.js', inputValues);
     
     $.ajax({
@@ -62,18 +76,20 @@ function fetchCalculations() {
     })
 }
 
-function deleteMessage() {
-    let index = $(this).data('index');
-    $.ajax({
-        method: 'DELETE',
-        url: '/calculator/' + index
-    }).then(function (response) {
-        fetchCalculations();
-    }).catch(function (err) {
-        alert('Unable to delete message! Try again.');
-        console.log(err);
-    })
-}
+// function deleteMessage() {
+//     let index = $(this).data('index');
+//     $.ajax({
+//         method: 'DELETE',
+//         url: '/calculator/' + index
+//     }).then(function (response) {
+//         fetchCalculations();
+//     }).catch(function (err) {
+//         alert('Unable to delete message! Try again.');
+//         console.log(err);
+//     })
+// }
+
+
 
 function onRender() {
 

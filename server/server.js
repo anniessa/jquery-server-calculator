@@ -8,6 +8,9 @@ app.use(bodyParser.urlencoded({extended:true}))
 app.use(express.static('server/public'));
 
 let calculationsSS = [];
+let numberValue = 0;
+let operatorValue = '';
+
 
 app.post('/calculator' , (req, res)=> {
     console.log('inside of my POST request', req.body);
@@ -15,12 +18,20 @@ app.post('/calculator' , (req, res)=> {
     let objectSS = req.body;
     
     calculationsSS.push(objectSS); // server side is receiving the object
-    res.sendStatus(201);
+    res.sendStatus(200);
 });  
 
 app.get('/calculator', (req, res) => { // hey server is gonna use that data you sent so we can do some calculations with it
     console.log('getting the input data from client js', calculationsSS);
     // calculations are going to go here ⬇️
+
+    for (let i = 0; i < calculationsSS.length-1; i++) {
+        if (i % 2 == 0) {
+        numberValue = Number(calculationsSS[i]);
+        } else if (i % 1 == 0) {
+        operatorValue = calculationsSS[i];
+        }
+    }
     
     for (let object of calculationsSS) {
         if (object.operator === "+") {
@@ -39,7 +50,7 @@ app.get('/calculator', (req, res) => { // hey server is gonna use that data you 
 
 app.delete('/calculator/:index', (req,res) => {
     console.log('in /calculator delete:', req.params.index);
-    res.sendStatus(201);
+    res.sendStatus(200);
 })
 
 app.listen(PORT, () => {
