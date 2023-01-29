@@ -1,11 +1,7 @@
 $(document).ready(onReady);
 
-let operatorClick = $('.operator').attr("value");
-// let decimal =$('.decimal').attr("value");
+
 let calculationsArray = [];
-// let totalInput = '';
-
-
 
 function onReady() {
     console.log('jquery is loaded!');
@@ -15,7 +11,7 @@ function onReady() {
     $('.decimal').on('click', addInputField);
     $('.equal').on('click', onSubmit);
     $('.clearBtn').on('click', onClear);
-    // $('.clearBtn').on('click', deleteMessage);
+    $('.clearAllBtn').on('click', deleteMessage);
 }
 
 function addInputField(){
@@ -29,7 +25,6 @@ function addInputField(){
 
 function addOperator(){
     $('.operator').prop('disabled', true);
-    console.log('this operator was clicked', operatorClick);
 }
 
 function onClear() {
@@ -98,18 +93,18 @@ function fetchCalculations() {
     })
 }
 
-// function deleteMessage() {
-//     let index = $(this).data('index');
-//     $.ajax({
-//         method: 'DELETE',
-//         url: '/calculator/' + index
-//     }).then(function (response) {
-//         fetchCalculations();
-//     }).catch(function (err) {
-//         alert('Unable to delete message! Try again.');
-//         console.log(err);
-//     })
-// }
+function deleteMessage() {
+    let index = $(this).data('.appendThingsHere');
+    $.ajax({
+        method: 'DELETE',
+        url: '/calculator/' + index
+    }).then(function (response) {
+        calculationsArray = response;
+    }).catch(function (err) {
+        alert('Unable to delete message! Try again.');
+        console.log(err);
+    })
+}
 
 function onRender() {
 
