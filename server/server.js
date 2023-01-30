@@ -2,6 +2,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 
+console.log('My name is', process.env.MY_NAME);
+
 // APP SETUP
 const app = express();
 const PORT = 5002;
