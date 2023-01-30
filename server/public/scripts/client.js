@@ -15,6 +15,8 @@ function onReady() {
     $('#history li').click( function(){
         $('.fullEquation').text($(this));
     });
+
+    onRender();
 } 
 
 function addInputField(){
@@ -89,7 +91,7 @@ function onSubmit() {
             url:'/calculator'
         }).then(function(response) {
             calculationsArray = response;
-            onRender();
+            onRender(); // on ready, call get you could also do onRender(response)
         }).catch(function(err) {
             alert('Unable to get the data! Try again later.')
             console.log(err);
@@ -111,6 +113,7 @@ function onSubmit() {
     
     
     function onRender() {
+        console.log('in on render');
         
         $('#returnedAnswer').empty();
         $('#history').empty();

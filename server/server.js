@@ -1,13 +1,17 @@
+//IMPORTS
 const express = require('express');
 const bodyParser = require('body-parser');
+
+// APP SETUP
 const app = express();
 const PORT = 5002;
-
-app.use(bodyParser.urlencoded({extended:true}))
+app.use(bodyParser.urlencoded({extended:true})) // parsing out an object within an object within an object
 
 app.use(express.static('server/public'));
 
 let calculationsSS = [];
+
+// HTTP ROUTE
 
 app.post('/calculator' , (req, res)=> {
     console.log('inside of my POST request', req.body);
@@ -15,7 +19,7 @@ app.post('/calculator' , (req, res)=> {
     let objectSS = req.body;
     
     calculationsSS.push(objectSS); // server side is receiving the object
-    res.sendStatus(200);
+    res.sendStatus(201);
 });  
 
 app.get('/calculator', (req, res) => { // hey server is gonna use that data you sent so we can do some calculations with it
@@ -33,8 +37,12 @@ app.get('/calculator', (req, res) => { // hey server is gonna use that data you 
         } else if (object.operator === "/") {
             object.answer = Number(object.firstNumber) / Number(object.secondNumber);
         };
-        object.answer
     };
+
+    // switch(objectSS.operator) {
+        //case '+': 
+        //objectSS.result = Number(objectSS.firstNumber) + Number(objectCSS.secondNumber)
+    // }
 
     res.send(calculationsSS); // sending the calculations array with allll the calculations back to client-side
     console.log('this is a calculation', calculationsSS)
@@ -52,6 +60,7 @@ app.delete('/calculator/:index', (req,res) => {
     res.sendStatus(200);
 });
 
+//LISTEN START
 app.listen(PORT, () => {
     console.log ('Server is running on port', PORT)
 });
