@@ -98,18 +98,18 @@ function onSubmit() {
         })
     }
     
-    function deleteMessage() {
-        let index = $(this).data('.appendThingsHere');
-        $.ajax({
-            method: 'DELETE',
-            url: '/calculator/' + index
-        }).then(function (response) {
-            calculationsArray = response;
-        }).catch(function (err) {
-            alert('Unable to delete message! Try again.');
-            console.log(err);
-        })
-    }
+    // function deleteMessage() {
+    //     let index = $(this).data('.appendThingsHere');
+    //     $.ajax({
+    //         method: 'DELETE',
+    //         url: '/calculator/' + index
+    //     }).then(function (response) {
+    //         calculationsArray = response;
+    //     }).catch(function (err) {
+    //         alert('Unable to delete message! Try again.');
+    //         console.log(err);
+    //     })
+    // }
     
     
     function onRender() {

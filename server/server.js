@@ -48,17 +48,17 @@ app.get('/calculator', (req, res) => { // hey server is gonna use that data you 
     console.log('this is a calculation', calculationsSS)
 });
 
-app.delete('/calculator/:index', (req,res) => {
-    console.log('in /calculator delete:', req.params.index);
-    const index = req.params;
-    const deleted = calculationsSS.find(equation => equation.index === index)
-    if (deleted) {
-        calculationsSS = calculationsSS.filter(calculationsSS => calculationsSS.index != index)
-    } else {
-       res.status(404)
-    }
-    res.sendStatus(200);
-});
+// app.delete('/calculator/:index', (req,res) => {
+//     console.log('in /calculator delete:', req.params.index);
+//     const index = req.params;
+//     const deleted = calculationsSS.find(equation => equation.index === index)
+//     if (deleted) {
+//         calculationsSS = calculationsSS.filter(calculationsSS => calculationsSS.index != index)
+//     } else {
+//        res.status(404)
+//     }
+//     res.sendStatus(200);
+// });
 
 //LISTEN START
 app.listen(PORT, () => {
