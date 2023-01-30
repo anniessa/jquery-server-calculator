@@ -6,7 +6,7 @@ console.log('My name is', process.env.MY_NAME);
 
 // APP SETUP
 const app = express();
-const PORT = 5002;
+const PORT = process.env.PORT || 5000;
 app.use(bodyParser.urlencoded({extended:true})) // parsing out an object within an object within an object
 
 app.use(express.static('server/public'));
