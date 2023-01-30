@@ -11,7 +11,7 @@ function onReady() {
     $('.decimal').on('click', addInputField);
     $('.equal').on('click', onSubmit);
     $('.clearBtn').on('click', onClear);
-    $('.clearAllBtn').on('click', deleteMessage);
+    // $('.clearAllBtn').on('click', deleteMessage);
     $('#history li').click( function(){
         $('.fullEquation').text($(this));
     });
